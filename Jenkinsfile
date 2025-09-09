@@ -2,10 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Test Stage') {
+        stage('Check Python') {
             steps {
-                echo '✅ Jenkinsfile is being executed!'
-                bat 'dir'   // list files in workspace
+                bat 'python --version'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Install required Python packages
+                bat 'pip install selenium pandas'
+            }
+        }
+
+        stage('Run Python Files') {
+            steps {
+                // Run your Python scripts
+                bat 'python Instance_Static_methods.py'
+                bat 'python Local_Global_Variables.py'
             }
         }
     }
