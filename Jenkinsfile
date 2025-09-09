@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Check Python in Jenkins') {
+        stage('Verify Python Setup') {
             steps {
-                // Check if Python is available to Jenkins
+                echo 'Checking Python installation...'
                 bat 'where python'
                 bat 'python --version'
             }
@@ -12,17 +12,29 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // Install the required Python libraries
+                echo 'Installing required Python packages...'
                 bat 'pip install selenium pandas'
             }
         }
 
-        stage('Run Python Files') {
+        stage('Run Python Scripts') {
             steps {
-                // Run your Python scripts
-                bat 'python Instance_Static_methods.py'
-                bat 'python Local_Global_Variables.py'
+                echo 'Executing Python scripts...'
+                bat '''
+                    python Instance_Static_methods.py
+                    python Local_Global_Variables.py
+                '''
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline completed. Archiving logs if any...'
+            archiveArtifacts artifacts: '**/*.txt', allowEmptyArchive: true
+        }
+        failure {
+            echo 'Pipeline failed. Please check the logs for errors.'
         }
     }
 }
