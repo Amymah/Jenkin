@@ -11,7 +11,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // If you have requirements.txt in repo
-                //bat 'pip install -r requirements.txt'
+                // bat 'pip install -r requirements.txt'
 
                 // Or install specific packages directly (example: selenium, pandas)
                 bat 'pip install selenium pandas'
@@ -20,8 +20,8 @@ pipeline {
 
         stage('Run Python Files') {
             steps {
-                bat 'Instance_Static_methods.py'
-                bat 'Local_Global_Variables.py'
+                bat 'python Instance_Static_methods.py'
+                bat 'python Local_Global_Variables.py'
             }
         }
     }
